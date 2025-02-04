@@ -9,4 +9,12 @@ const generateRandomString = length => {
   return result;
 };
 
-export { generateRandomString };
+const fillAndSubmitForm = async (page, fields, values) => {
+  for (let i = 0; i < values.length; i++) {
+    await page.locator(fields).nth(i).fill(values[i]);
+  }
+
+  await page.locator('button').click();
+};
+
+export { generateRandomString, fillAndSubmitForm };
