@@ -1,11 +1,11 @@
-const { test, expect, beforeEach } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 const heading = 'AQA eShop';
 const loginHeading = 'Welcome Back! 👋🏻';
 
 test.describe('CSS selectors', () => {
-  beforeEach('visit the app', ({ page }) => {
-    page.goto('/');
+  test.beforeEach('visit the app', async ({ page }) => {
+    await page.goto('/');
   });
 
   test('get by - full expression', async ({ page }) => {
@@ -49,8 +49,8 @@ test.describe('CSS selectors', () => {
 });
 
 test.describe('built-in selectors', () => {
-  beforeEach('visit the app', ({ page }) => {
-    page.goto('/');
+  test.beforeEach('visit the app', async ({ page }) => {
+    await page.goto('/');
   });
 
   test('get by - text', async ({ page }) => {
