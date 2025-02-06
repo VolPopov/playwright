@@ -1,45 +1,33 @@
-const { test, expect, beforeEach } = require('@playwright/test');
-const { generateRandomString } = require('../fixtures/utils');
+import { test, expect } from '@playwright/test';
+import { HEADINGS, URLS, generateUserCredentials, utils } from '../fixtures';
 
 test.describe.configure({ mode: 'serial' });
-
-test.describe('Register a user and log in', () => {
-  let username = generateRandomString(8);
-  let email = `${username}@gmail.com`;
-  let password = 'lozinka123';
+test.describe('register a user and log in', () => {
+  const { username, email, password } = generateUserCredentials(5);
 
   test('register with valid data', async ({ page }) => {
-    /* steps:
-    visit register page
-    fill in the form
-    click on submit button
-    */
-    await page.goto('/register');
+    // visit the register page
+    await page.goto(URLS['REGISTER']);
 
     await expect(page.locator('h1')).toBeVisible();
-    await expect(page.locator('h1')).toHaveText('Register!');
+    await expect(page.locator('h1')).toHaveText(HEADINGS['REGISTER']);
 
-    await page.locator('#username').fill(username);
-    await page.locator('#email').fill(email);
-    await page.locator('#password').fill(password);
-    await page.locator('button').click();
+    // fill in the form
+    utils.fillAndSubmitForm(page, 'input', [username, email, password]);
+
+    await expect(page).toHaveURL(URLS['DASHBOARD']);
   });
 
-  test('login with registered user', async ({ page }) => {
-    /* steps:
-    visit login page
-    fill in the form
-    click on submit button
-    */
-    await page.goto('/login');
+  test('log in with registered user', async ({ page }) => {
+    // visit the login page
+    await page.goto(URLS['LOGIN']);
 
     await expect(page.locator('h1')).toBeVisible();
-    await expect(page.locator('h1')).toHaveText('Welcome Back! 👋🏻');
+    await expect(page.locator('h1')).toHaveText(HEADINGS['LOGIN']);
 
-    await page.locator('#email').fill(email);
-    await page.locator('#password').fill(password);
-    await page.locator('button').click();
+    // fill in the form
+    utils.fillAndSubmitForm(page, 'input', [email, password]);
 
-    await expect(page).toHaveURL('/dashboard');
+    await expect(page).toHaveURL(URLS['DASHBOARD']);
   });
 });
