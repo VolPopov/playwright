@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { HEADINGS, URLS, utils, VALID_LOGIN_PAYLOAD } from '../fixtures';
-import { LoginPage } from '../pom/loginPage';
+import { LoginPage } from '../pom/modules/ui/loginPage';
 
 test.describe('login tests', () => {
   let loginPage;
