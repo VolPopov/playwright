@@ -10,4 +10,9 @@ const generateUserCredentials = length => {
   return { username, email, password };
 };
 
-export { generateUserCredentials };
+const VALID_LOGIN_PAYLOAD = {
+  EMAIL: 'filip@test.com',
+  PASSWORD: 'test123',
+};
+
+export { generateUserCredentials, VALID_LOGIN_PAYLOAD };
