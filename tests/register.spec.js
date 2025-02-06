@@ -1,19 +1,21 @@
 import { test, expect } from '@playwright/test';
 import { HEADINGS, URLS, generateUserCredentials, utils } from '../fixtures';
+import { RegisterPage } from '../pom/registerPage';
 
 test.describe('register a user', () => {
+  let registerPage;
   const { username, email, password } = generateUserCredentials(5);
+
   test.beforeEach('visit the register page', async ({ page }) => {
+    registerPage = new RegisterPage(page);
     await page.goto(URLS['REGISTER']);
   });
 
   test('register with valid data', async ({ page }) => {
-    const heading = page.locator('h1');
-    await heading.waitFor();
-    await expect(heading).toHaveText(HEADINGS['REGISTER']);
+    await registerPage.heading.waitFor();
+    await expect(registerPage.heading).toHaveText(HEADINGS['REGISTER']);
 
-    // fill in the form
-    utils.fillAndSubmitForm(page, 'input', [username, email, password]);
+    registerPage.register(username, email, password);
 
     await page.waitForURL(URLS['DASHBOARD']);
     await expect(page).toHaveURL(URLS['DASHBOARD']);
