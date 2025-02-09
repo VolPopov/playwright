@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { HEADINGS, URLS, utils, VALID_LOGIN_PAYLOAD } from '../fixtures';
-import { LoginAPI } from '../pom/modules/api/loginAPI';
+import { HEADINGS, URLS, utils, VALID_LOGIN_PAYLOAD } from '../../../fixtures';
+import { LoginAPI } from '../../../pom/modules/api/loginAPI';
 
 test.describe('login API tests', () => {
   let loginAPI;
 
-  test.beforeEach('', ({ page }) => {
+  test.beforeEach('visit the login page', ({ page }) => {
     loginAPI = new LoginAPI(page);
   });
 

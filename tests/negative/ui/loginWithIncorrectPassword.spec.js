@@ -1,0 +1,25 @@
+import { test, expect } from '@playwright/test';
+import { HEADINGS, URLS, utils, VALID_LOGIN_PAYLOAD } from '../../../fixtures';
+import { LoginPage } from '../../../pom/modules/ui/loginPage';
+
+test.describe('Incorrect login tests', () => {
+  let loginPage;
+
+  test.beforeEach('visit the login page', async ({ page }) => {
+    loginPage = new LoginPage(page);
+    await page.goto(URLS['LOGIN']);
+  });
+
+  test('attempt to log in with wrong password', async ({ page }) => {
+    await loginPage.heading.waitFor();
+    await expect(loginPage.heading).toHaveText(HEADINGS['LOGIN']);
+
+    loginPage.login(
+      VALID_LOGIN_PAYLOAD['EMAIL'],
+      "WrongPassword"
+    );
+
+    await page.waitForURL(URLS['LOGIN']);
+    await expect(page.locator("p")).toHaveText("The email address or password you entered is invalid")
+  });
+});
