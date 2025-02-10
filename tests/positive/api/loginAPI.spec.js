@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { HEADINGS, URLS, utils, VALID_LOGIN_PAYLOAD } from '../../../fixtures';
+import {
+  utils,
+  VALID_LOGIN_PAYLOAD,
+  INVALID_EMAIL_ADDRESS,
+  INCORRECT_PASSWORD,
+  ERRORS,
+} from '../../../fixtures';
 import { LoginAPI } from '../../../pom/modules/api/loginAPI';
 
 test.describe('login API tests', () => {
@@ -7,6 +13,22 @@ test.describe('login API tests', () => {
 
   test.beforeEach('visit the login page', ({ page }) => {
     loginAPI = new LoginAPI(page);
+  });
+
+  test('attempt to log in with an incorrect email API', async ({ page }) => {
+    const response = await loginAPI.login(
+      INVALID_EMAIL_ADDRESS['EMAIL'],
+      VALID_LOGIN_PAYLOAD['PASSWORD']
+    );
+    expect(response.error).toBe(ERRORS['UNAUTHORIZED']);
+  });
+
+  test('attempt to log in with an incorrect password API', async ({ page }) => {
+    const response = await loginAPI.login(
+      VALID_LOGIN_PAYLOAD['EMAIL'],
+      INCORRECT_PASSWORD['PASSWORD']
+    );
+    expect(response.error).toBe(ERRORS['UNAUTHORIZED']);
   });
 
   test('login via BE', async ({ page }) => {
