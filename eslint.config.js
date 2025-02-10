@@ -1,19 +1,24 @@
-const playwright = require('eslint-plugin-playwright');
+import playwright from 'eslint-plugin-playwright';
 
-module.exports = [
+export default [
   {
-    ...playwright.configs('flat/recommended'),
-    files: ['test/**'],
-  },
-  {
+    ...playwright.configs['flat/recommended'],
     files: ['tests/**'],
     rules: {
-      'playwright/no-wait-for-timeout': 'error', // Disallow waitForTimeout,
-      'playwright/no-commented-out-tests': 'error', // Disallow commented out tests
-      'playwright/expect-expect': 'error', // Enforce assertion to be made in a test body
-      'playwright/missing-playwright-await': 'error', // Enforce Playwright APIs to be awaited
-      'playwright/no-focused-test': 'error', // Dissalow usage of .only annotation,
-      'playwright/no-skipped-test': 'error', // Dissalow usage of the .skip annotation
+      ...playwright.configs['flat/recommended'].rules,
+      // Custom Playwright rules
+      'playwright/no-wait-for-timeout': 'error',
+      'playwright/no-commented-out-tests': 'error',
+      'playwright/expect-expect': 'error',
+      'playwright/missing-playwright-await': 'error',
+      'playwright/no-focused-test': 'error',
+      'playwright/no-skipped-test': 'error',
+
+      // General JavaScript rules
+      'no-unused-vars': 'warn',
+      'object-curly-spacing': ['error', 'always'],
+      'no-var': 'error',
+      'no-console': 'error',
     },
   },
 ];
