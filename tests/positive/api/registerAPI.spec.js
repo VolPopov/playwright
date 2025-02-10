@@ -64,9 +64,7 @@ test.describe('register API tests', () => {
       email,
       INVALID_LONG_PASSWORD['PASSWORD']
     );
-    expect(response.message).toBe(
-      'The password field must not be longer than 100 characters.'
-    );
+    expect(response.message).toBe(ERRORS['LONG_PASSWORD']);
   });
 
   test('register via BE', async ({ page }) => {

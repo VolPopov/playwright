@@ -76,6 +76,7 @@ test.describe('register a user', () => {
   }) => {
     await registerPage.heading.waitFor();
     await expect(registerPage.heading).toHaveText(HEADINGS['REGISTER']);
+    await expect(page.locator('p')).toHaveText(ERRORS['LONG_PASSWORD']);
 
     await registerPage.register(
       username,
