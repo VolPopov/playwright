@@ -48,6 +48,77 @@ test.describe('login tests', () => {
     );
   });
 
+  test('expect text form to be editable', async () => {
+    await expect(loginPage.emailInput).toBeEditable();
+    await expect(loginPage.passwordInput).toBeEditable();
+  });
+
+  test('expect form to have 2 text inputs', async ({ page }) => {
+    const inputLocators = page.locator('form >> input');
+    await expect(inputLocators).toHaveCount(2);
+  });
+
+  test('expect element to have a class', async () => {
+    await expect(loginPage.emailInput).toHaveClass(
+      'w-full rounded p-inputtext p-component'
+    );
+    await expect(loginPage.passwordInput).toHaveClass(
+      'w-full rounded p-inputtext p-component'
+    );
+  });
+
+  test('expect element to have id', async () => {
+    await expect(loginPage.emailInput).toHaveId('email');
+    await expect(loginPage.passwordInput).toHaveId('password');
+  });
+
+  test('expect element to have attributes', async () => {
+    await expect(loginPage.emailInput).toHaveAttribute('placeholder');
+    await expect(loginPage.passwordInput).toHaveAttribute('placeholder');
+
+    const emailPlaceholder = 'Email address';
+    const passwordPlaceholder = 'Password';
+
+    await expect(loginPage.emailInput).toHaveAttribute(
+      'placeholder',
+      emailPlaceholder
+    );
+    await expect(loginPage.passwordInput).toHaveAttribute(
+      'placeholder',
+      passwordPlaceholder
+    );
+  });
+
+  test('expect elements to retain values when typed into', async () => {
+    const emailValue = 'filip@test.com';
+    const passwordValue = 'test123';
+    await loginPage.emailInput.fill(emailValue);
+    await expect(loginPage.emailInput).toHaveValue(emailValue);
+    await loginPage.passwordInput.fill(passwordValue);
+    await expect(loginPage.passwordInput).toHaveValue(passwordValue);
+  });
+
+  test('expect element to be enabled', async () => {
+    await expect(loginPage.submitButton).toBeEnabled();
+  });
+
+  test('expect element to be focused', async () => {
+    await loginPage.emailInput.click();
+    await expect(loginPage.emailInput).toBeFocused();
+  });
+
+  test('expect element to be empty', async () => {
+    await expect(loginPage.emailInput).toBeEmpty();
+    await expect(loginPage.passwordInput).toBeEmpty();
+  });
+
+  test('expect form with all elements to be in viewport', async ({ page }) => {
+    await expect(page.locator('form')).toBeInViewport();
+    await expect(page.locator('form >> input').nth(0)).toBeInViewport();
+    await expect(page.locator('form >> input').nth(1)).toBeInViewport();
+    await expect(page.locator('form >> button')).toBeInViewport();
+  });
+
   test('log in with registered user', async ({ page }) => {
     await loginPage.heading.waitFor();
     await expect(loginPage.heading).toHaveText(HEADINGS['LOGIN']);
