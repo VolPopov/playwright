@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HEADINGS, URLS, utils, VALID_LOGIN_PAYLOAD } from '../../../fixtures';
+import { ERRORS, HEADINGS, INCORRECT_PASSWORD, URLS, utils, VALID_LOGIN_PAYLOAD } from '../../../fixtures';
 import { LoginPage } from '../../../pom/modules/ui/loginPage';
 
 test.describe('Incorrect login tests', () => {
@@ -16,10 +16,10 @@ test.describe('Incorrect login tests', () => {
 
     loginPage.login(
       VALID_LOGIN_PAYLOAD['EMAIL'],
-      "WrongPassword"
+      INCORRECT_PASSWORD["PASSWORD"],
     );
 
     await page.waitForURL(URLS['LOGIN']);
-    await expect(page.locator("p")).toHaveText("The email address or password you entered is invalid")
+    await expect(page.locator("p")).toHaveText(ERRORS["WRONG_MAIL_OR_PASSWORD"])
   });
 });

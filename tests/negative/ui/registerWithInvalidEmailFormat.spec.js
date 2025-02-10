@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HEADINGS, URLS, INVALID_EMAIL_FORMAT,generateUserCredentials, utils } from '../../../fixtures';
+import { HEADINGS, URLS, INVALID_EMAIL_FORMAT,generateUserCredentials, utils, ERRORS } from '../../../fixtures';
 import { RegisterPage } from '../../../pom/modules/ui/registerPage';
 
 test.describe('incorrect register tests', () => {
@@ -18,6 +18,6 @@ test.describe('incorrect register tests', () => {
     registerPage.register(username, INVALID_EMAIL_FORMAT["EMAIL"], password);
 
     await expect(page).toHaveURL(URLS['REGISTER']);
-    await expect(page.locator("p")).toHaveText("The email field format is invalid.");
+    await expect(page.locator("p")).toHaveText(ERRORS["INVALID_MAIL"]);
   });
 });

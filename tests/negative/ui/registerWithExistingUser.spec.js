@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HEADINGS, URLS, VALID_LOGIN_PAYLOAD, utils } from '../../../fixtures';
+import { ERRORS, HEADINGS, URLS, VALID_LOGIN_PAYLOAD, utils } from '../../../fixtures';
 import { RegisterPage } from '../../../pom/modules/ui/registerPage';
 
 test.describe('incorrect register tests', () => {
@@ -17,6 +17,6 @@ test.describe('incorrect register tests', () => {
     registerPage.register("RandomUserName", VALID_LOGIN_PAYLOAD["EMAIL"], VALID_LOGIN_PAYLOAD["PASSWORD"]);
 
     await expect(page).toHaveURL(URLS['REGISTER']);
-    await expect(page.locator("p")).toHaveText("The email has already been taken.");
+    await expect(page.locator("p")).toHaveText(ERRORS["TAKEN_MAIL"]);
   });
 });

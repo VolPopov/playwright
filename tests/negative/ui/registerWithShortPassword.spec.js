@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HEADINGS, URLS, INVALID_SHORT_PASSWORD,generateUserCredentials, utils } from '../../../fixtures';
+import { HEADINGS, URLS, INVALID_SHORT_PASSWORD,generateUserCredentials, utils, ERRORS } from '../../../fixtures';
 import { RegisterPage } from '../../../pom/modules/ui/registerPage';
 
 test.describe('incorrect register tests', () => {
@@ -18,6 +18,6 @@ test.describe('incorrect register tests', () => {
     registerPage.register(username, email, INVALID_SHORT_PASSWORD["PASSWORD"]);
 
     await expect(page).toHaveURL(URLS['REGISTER']);
-    await expect(page.locator("p")).toHaveText("The password field must be at least 6 characters.");
+    await expect(page.locator("p")).toHaveText(ERRORS["SHORT_PASSWORD"]);
   });
 });

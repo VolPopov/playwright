@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HEADINGS, URLS, utils, VALID_LOGIN_PAYLOAD } from '../../../fixtures';
+import { HEADINGS, URLS, utils, VALID_LOGIN_PAYLOAD, ERRORS, INVALID_EMAIL_ADDRESS } from '../../../fixtures';
 import { LoginAPI } from '../../../pom/modules/api/loginAPI';
 
 test.describe('negative login API tests', () => {
@@ -11,9 +11,9 @@ test.describe('negative login API tests', () => {
 
   test('attempt to log in with an incorrect email', async ({ page }) => {
     const response = await loginAPI.login(
-      "Wrongmail@wrong.com",
+      INVALID_EMAIL_ADDRESS["EMAIL"],
       VALID_LOGIN_PAYLOAD['PASSWORD'],
     );    
-    expect(response.error).toBe('Unauthorized');
+    expect(response.error).toBe(ERRORS["UNAUTHORIZED"]);
   });
 });

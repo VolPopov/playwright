@@ -3,13 +3,14 @@ export class RegisterAPI {
       this.page = page;
     }
   
-    async register(username1, email1, password1) {
+    async register(username, email, password) {
       let response = await this.page.request.post('/api/v1/auth/register', {
-        data: { username: username1, email: email1, password: password1 },
+        data: { username: username, email: email, password: password },
         headers: { Accept: 'application/json' },
       });
   
       let responseJSON = await response.json();
+
       return responseJSON;
     }
   }

@@ -15,6 +15,14 @@ const VALID_LOGIN_PAYLOAD = {
   PASSWORD: 'test123',
 };
 
+const INVALID_EMAIL_ADDRESS = {
+  EMAIL: "Wrongmail@wrong.com",
+};
+
+const INCORRECT_PASSWORD = {
+  PASSWORD: "WrongPassword123",
+};
+
 const INVALID_SHORT_PASSWORD = {
   PASSWORD: "Pas",
 };
@@ -24,7 +32,7 @@ const INVALID_EMAIL_FORMAT = {
 };
 
 const INVALID_LONG_PASSWORD = {
-  PASSWORD: "PasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPasPas",
+  PASSWORD: generateRandomString(200),
 };
 
-export { generateUserCredentials, VALID_LOGIN_PAYLOAD, INVALID_SHORT_PASSWORD, INVALID_EMAIL_FORMAT, INVALID_LONG_PASSWORD };
+export { generateUserCredentials, VALID_LOGIN_PAYLOAD, INVALID_SHORT_PASSWORD, INVALID_EMAIL_FORMAT, INVALID_LONG_PASSWORD, INVALID_EMAIL_ADDRESS, INCORRECT_PASSWORD };
