@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { HEADINGS, URLS, generateUserCredentials, utils } from '../fixtures';
-import { RegisterPage } from '../pom/modules/ui/registerPage';
+import { HEADINGS, URLS, generateUserCredentials, utils } from '../../../fixtures';
+import { RegisterPage } from '../../../pom/modules/ui/registerPage';
 
 test.describe('register a user', () => {
   let registerPage;

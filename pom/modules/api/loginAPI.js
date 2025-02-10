@@ -5,7 +5,7 @@ export class LoginAPI {
 
   async login(email, password) {
     let response = await this.page.request.post('/api/v1/auth/login', {
-      data: { email: 'filip@test.com', password: 'test123' },
+      data: { email: email, password: password },
       headers: { Accept: 'application/json' },
     });
 
