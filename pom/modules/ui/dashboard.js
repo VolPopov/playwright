@@ -10,7 +10,7 @@ export class Dashboard {
       "section[class='flex-1 overflow-y-auto px-2 py-2']"
     );
     this.textOfItem = this.cartMenu.locator(
-      "[class='flex-1 overflow-y-auto px-2 py-2'] > div:has-text('Intel Core i9-11900K')"
+      "[class='flex-1 overflow-y-auto px-2 py-2'] > div"
     );
   }
 

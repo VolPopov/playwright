@@ -33,6 +33,7 @@ test.describe('dashboard tests', () => {
     await dashboard.addAnItemToCart(broj);
     await header.button.nth(0).click();
     console.log(await dashboard.textOfItem);
+    await expect(dashboard.cartMenu).toBeVisible();
     await expect(dashboard.textOfItem).toBeVisible();
   });
 });
