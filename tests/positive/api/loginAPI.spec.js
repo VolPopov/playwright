@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import {
-  utils,
   VALID_LOGIN_PAYLOAD,
   INVALID_EMAIL_ADDRESS,
   INCORRECT_PASSWORD,
@@ -15,7 +14,7 @@ test.describe('login API tests', () => {
     loginAPI = new LoginAPI(page);
   });
 
-  test('attempt to log in with an incorrect email API', async ({ page }) => {
+  test('attempt to log in with an incorrect email API', async ({}) => {
     const response = await loginAPI.login(
       INVALID_EMAIL_ADDRESS['EMAIL'],
       VALID_LOGIN_PAYLOAD['PASSWORD']
@@ -23,7 +22,7 @@ test.describe('login API tests', () => {
     expect(response.error).toBe(ERRORS['UNAUTHORIZED']);
   });
 
-  test('attempt to log in with an incorrect password API', async ({ page }) => {
+  test('attempt to log in with an incorrect password API', async ({}) => {
     const response = await loginAPI.login(
       VALID_LOGIN_PAYLOAD['EMAIL'],
       INCORRECT_PASSWORD['PASSWORD']
@@ -31,7 +30,7 @@ test.describe('login API tests', () => {
     expect(response.error).toBe(ERRORS['UNAUTHORIZED']);
   });
 
-  test('login via BE', async ({ page }) => {
+  test('login via BE', async ({}) => {
     const response = await loginAPI.login(
       VALID_LOGIN_PAYLOAD['EMAIL'],
       VALID_LOGIN_PAYLOAD['PASSWORD']

@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import {
-  utils,
   VALID_LOGIN_PAYLOAD,
   generateUserCredentials,
   INVALID_SHORT_PASSWORD,
@@ -18,9 +17,7 @@ test.describe('register API tests', () => {
     registerAPI = new RegisterAPI(page);
   });
 
-  test('attempt to register user with an already existing email', async ({
-    page,
-  }) => {
+  test('attempt to register user with an already existing email', async ({}) => {
     const response = await registerAPI.register(
       'NewTestUsername',
       VALID_LOGIN_PAYLOAD['EMAIL'],
@@ -29,9 +26,7 @@ test.describe('register API tests', () => {
     expect(response.message).toBe(ERRORS['TAKEN_MAIL']);
   });
 
-  test('attempt to register user with an invalid email format', async ({
-    page,
-  }) => {
+  test('attempt to register user with an invalid email format', async ({}) => {
     const response = await registerAPI.register(
       username,
       INVALID_EMAIL_FORMAT['EMAIL'],
@@ -40,14 +35,12 @@ test.describe('register API tests', () => {
     expect(response.message).toBe(ERRORS['INVALID_MAIL']);
   });
 
-  test('attempt to register user without a username', async ({ page }) => {
+  test('attempt to register user without a username', async ({}) => {
     const response = await registerAPI.register('', email, password);
     expect(response.message).toBe(ERRORS['NO_USERNAME']);
   });
 
-  test('attempt to register a user with a password shorther than 6 characters', async ({
-    page,
-  }) => {
+  test('attempt to register a user with a password shorther than 6 characters', async ({}) => {
     const response = await registerAPI.register(
       username,
       email,
@@ -56,9 +49,7 @@ test.describe('register API tests', () => {
     expect(response.message).toBe(ERRORS['SHORT_PASSWORD']);
   });
 
-  test('attempt to register a user with a password longer than 100 characters', async ({
-    page,
-  }) => {
+  test('attempt to register a user with a password longer than 100 characters', async ({}) => {
     const response = await registerAPI.register(
       username,
       email,
@@ -67,7 +58,7 @@ test.describe('register API tests', () => {
     expect(response.message).toBe(ERRORS['LONG_PASSWORD']);
   });
 
-  test('register via BE', async ({ page }) => {
+  test('register via BE', async ({}) => {
     const response = await registerAPI.register(username, email, password);
 
     expect(response.status).toBe('Success');
