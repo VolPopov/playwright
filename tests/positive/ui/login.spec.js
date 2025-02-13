@@ -9,13 +9,25 @@ import {
   INVALID_EMAIL_ADDRESS,
 } from '../../../fixtures';
 import { LoginPage } from '../../../pom/modules/ui/loginPage';
+import { Footer } from '../../../pom/modules/ui/footer';
+import { Header } from '../../../pom/modules/ui/header';
 
 test.describe('login tests', () => {
   let loginPage;
+  let footer;
+  let header;
 
   test.beforeEach('visit the login page', async ({ page }) => {
     loginPage = new LoginPage(page);
+    header = new Header(page);
+    footer = new Footer(page);
     await page.goto(URLS['LOGIN']);
+    await expect(header.loginAndRegisterDiv).toBeVisible();
+    await expect(footer.linkedin).toBeVisible();
+    await expect(footer.google).toBeVisible();
+    await expect(footer.instagram).toBeVisible();
+    await expect(footer.facebook).toBeVisible();
+    await expect(footer.copyright).toBeVisible();
   });
 
   test('attempt to log in with wrong email', async ({ page }) => {
@@ -120,6 +132,8 @@ test.describe('login tests', () => {
   });
 
   test('log in with registered user', async ({ page }) => {
+    footer = new Footer(page);
+    header = new Header(page);
     await loginPage.heading.waitFor();
     await expect(loginPage.heading).toHaveText(HEADINGS['LOGIN']);
 
@@ -130,5 +144,13 @@ test.describe('login tests', () => {
 
     await page.waitForURL(URLS['DASHBOARD']);
     await expect(page).toHaveURL(URLS['DASHBOARD']);
+    await expect(footer.linkedin).toBeVisible();
+    await expect(footer.google).toBeVisible();
+    await expect(footer.instagram).toBeVisible();
+    await expect(footer.facebook).toBeVisible();
+    await expect(footer.copyright).toBeVisible();
+    await expect(header.headerAfterLogin).toBeVisible();
+    await expect((header.button).nth(0)).toBeVisible();
+    await expect((header.button).nth(1)).toBeVisible();
   });
 });
