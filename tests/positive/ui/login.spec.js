@@ -11,11 +11,13 @@ import {
 import { LoginPage } from '../../../pom/modules/ui/loginPage';
 import { Footer } from '../../../pom/modules/ui/footer';
 import { Header } from '../../../pom/modules/ui/header';
+import { Dashboard } from '../../../pom/modules/ui/dashboard';
 
 test.describe('login tests', () => {
   let loginPage;
   let footer;
   let header;
+  let dashboard;
 
   test.beforeEach('visit the login page', async ({ page }) => {
     loginPage = new LoginPage(page);
@@ -132,8 +134,7 @@ test.describe('login tests', () => {
   });
 
   test('log in with registered user', async ({ page }) => {
-    footer = new Footer(page);
-    header = new Header(page);
+    dashboard = new Dashboard(page);
     await loginPage.heading.waitFor();
     await expect(loginPage.heading).toHaveText(HEADINGS['LOGIN']);
 
@@ -150,7 +151,9 @@ test.describe('login tests', () => {
     await expect(footer.facebook).toBeVisible();
     await expect(footer.copyright).toBeVisible();
     await expect(header.headerAfterLogin).toBeVisible();
-    await expect((header.button).nth(0)).toBeVisible();
-    await expect((header.button).nth(1)).toBeVisible();
+    await expect(header.button.nth(0)).toBeVisible();
+    await expect(header.button.nth(1)).toBeVisible();
+    await expect(dashboard.products.nth(0)).toBeVisible();
+    await expect(dashboard.addToCartButton.nth(3)).toBeEnabled();
   });
 });
