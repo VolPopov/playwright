@@ -26,13 +26,12 @@ test.describe('dashboard tests', () => {
     await expect(dashboard.searchBar).toBeEditable();
   });
 
-  test('Add a product to the cart', async ({ page }) => {
+  test('Add a product to the cart', async ({}) => {
     let broj = 4;
 
     await expect(dashboard.addToCartButton.nth(broj)).toBeEnabled();
     await dashboard.addAnItemToCart(broj);
     await header.button.nth(0).click();
-    console.log(await dashboard.textOfItem);
     await expect(dashboard.cartMenu).toBeVisible();
     await expect(dashboard.textOfItem).toBeVisible();
   });

@@ -3,7 +3,6 @@ import {
   HEADINGS,
   URLS,
   generateUserCredentials,
-  utils,
   VALID_LOGIN_PAYLOAD,
   ERRORS,
   INVALID_EMAIL_FORMAT,

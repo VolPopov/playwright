@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import {
   HEADINGS,
   URLS,
-  utils,
   VALID_LOGIN_PAYLOAD,
   ERRORS,
   INCORRECT_PASSWORD,
