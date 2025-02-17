@@ -29,5 +29,16 @@ export class Dashboard {
       let responseJSON = await response.json();
       return responseJSON;
     }
+
+   checkIfItemIsInCart(allItems, itemID) {
+    let itemExists = false;
+    let cartLength = Object.keys(allItems.cart).length;
+    for (let i = 0; i < cartLength; i++) {
+       if (allItems.cart[i].id == itemID) {
+          itemExists = true;
+       }
+    }
+    return itemExists;
+   } 
   }
   

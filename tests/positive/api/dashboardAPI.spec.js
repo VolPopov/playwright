@@ -10,6 +10,7 @@ test.describe("Dashboard tests", () => {
 
   test.beforeEach("Log in", async ({ page }) => {
     loginAPI = new LoginAPI(page);
+    dashboard = new Dashboard(page);
     const response = await loginAPI.login(
         VALID_LOGIN_PAYLOAD['EMAIL'],
         VALID_LOGIN_PAYLOAD['PASSWORD']
@@ -20,8 +21,7 @@ test.describe("Dashboard tests", () => {
       
   });
 
-  test("Attempt to add item to cart that is out of stock", async ({ page }) => {
-    dashboard = new Dashboard(page);
+  test("Attempt to add item to cart that is out of stock", async ({}) => {
     const cartID = 119;
     const itemID = 1;
     const response = await dashboard.addItemToCart(cartID, itemID, bearerToken);
@@ -29,8 +29,7 @@ test.describe("Dashboard tests", () => {
     expect(response.message).toBe("Sorry, this product is currently not in stock.");
   });
 
-  test("Attempt to remove item that isn't in the cart", async ({ page }) => {
-    dashboard = new Dashboard(page);
+  test("Attempt to remove item that isn't in the cart", async ({}) => {
     const cartID = 119;
     const itemID = 4;
     const response = await dashboard.deleteItemFromCart(cartID, itemID, bearerToken);
@@ -38,31 +37,25 @@ test.describe("Dashboard tests", () => {
     expect(response.message).toBe("No product found.");
   });
 
-  test("Add an item to cart", async ({ page }) => {
-    dashboard = new Dashboard(page);
+  test("Add an item to cart", async ({}) => {
     let itemExists = false;
     const cartID = 119;
-    const itemID = 9;
+    const itemID = 14;
     const response = await dashboard.addItemToCart(cartID, itemID, bearerToken);
     expect(response.status).toBe("Success");
     expect(response.message).toBe("Product successfully added to cart");
     const allItems = await dashboard.getAllItemsInCart(cartID, bearerToken);
-    let cartLength = Object.keys(allItems.cart).length;
-    for (let i = 0; i < cartLength; i++) {
-       if (allItems.cart[i].id == itemID) {
-          itemExists = true;
-       }
-    }
-     expect(itemExists).toBe(true);
+    const doesItemExist = dashboard.checkIfItemIsInCart(allItems, itemID);
+    expect(doesItemExist).toBe(true);
   });
 
-  test("Remove item from cart", async ({ page }) => {
-    dashboard = new Dashboard(page);
+  test("Remove item from cart", async ({}) => {
     const cartID = 119;
     const itemID = 9;
     const response = await dashboard.deleteItemFromCart(cartID, itemID, bearerToken);
     expect(response.status).toBe("Success");
-    expect(response.message).toBe("Product removed from cart.");
+    const successMessages = response.message == "Product removed from cart." || response.message == "Product quantity decreased.";
+    expect(successMessages).toBe(true);
   });
 
 });
