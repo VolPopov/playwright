@@ -6,5 +6,8 @@ export const ERRORS = {
   TAKEN_MAIL: 'The email has already been taken.',
   WRONG_MAIL_OR_PASSWORD:
     'The email address or password you entered is invalid',
-  LONG_PASSWORD: 'The password field must not be longer than 100 characters.',
+  LONG_PASSWORD: 'The password field must not be longer than 100 characters.', 
+  API_ERROR: 'Error', 
+  API_NOT_IN_STOCK: "Sorry, this product is currently not in stock.", 
+  API_NO_PRODUCT_FOUND: "No product found.", 
 };

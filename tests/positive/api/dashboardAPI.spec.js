@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginAPI } from '../../../pom/modules/api/loginAPI';
 import { Dashboard } from '../../../pom/modules/api/dashboardAPI';
-import { VALID_LOGIN_PAYLOAD } from '../../../fixtures';
+import { ERRORS, SUCCESS, VALID_LOGIN_PAYLOAD } from '../../../fixtures';
 
 test.describe("Dashboard tests", () => {
   let loginAPI;
@@ -15,7 +15,7 @@ test.describe("Dashboard tests", () => {
         VALID_LOGIN_PAYLOAD['EMAIL'],
         VALID_LOGIN_PAYLOAD['PASSWORD']
       );
-      expect(response.status).toBe('Success');
+      expect(response.status).toBe(SUCCESS["API_SUCCESS"]);
       expect(response.user.email).toBe(VALID_LOGIN_PAYLOAD['EMAIL']);
       bearerToken = response.auth.token;
       
@@ -25,25 +25,24 @@ test.describe("Dashboard tests", () => {
     const cartID = 119;
     const itemID = 1;
     const response = await dashboard.addItemToCart(cartID, itemID, bearerToken);
-    expect(response.status).toBe("Error");
-    expect(response.message).toBe("Sorry, this product is currently not in stock.");
+    expect(response.status).toBe(ERRORS["API_ERROR"]);
+    expect(response.message).toBe(ERRORS["API_NOT_IN_STOCK"]);
   });
 
   test("Attempt to remove item that isn't in the cart", async ({}) => {
     const cartID = 119;
     const itemID = 4;
     const response = await dashboard.deleteItemFromCart(cartID, itemID, bearerToken);
-    expect(response.status).toBe("Error");
-    expect(response.message).toBe("No product found.");
+    expect(response.status).toBe(ERRORS['API_ERROR']);
+    expect(response.message).toBe(ERRORS["API_NO_PRODUCT_FOUND"]);
   });
 
   test("Add an item to cart", async ({}) => {
-    let itemExists = false;
     const cartID = 119;
     const itemID = 14;
     const response = await dashboard.addItemToCart(cartID, itemID, bearerToken);
-    expect(response.status).toBe("Success");
-    expect(response.message).toBe("Product successfully added to cart");
+    expect(response.status).toBe(SUCCESS["API_SUCCESS"]);
+    expect(response.message).toBe(SUCCESS["API_PRODUCT_ADDED_TO_CART"]);
     const allItems = await dashboard.getAllItemsInCart(cartID, bearerToken);
     const doesItemExist = dashboard.checkIfItemIsInCart(allItems, itemID);
     expect(doesItemExist).toBe(true);
@@ -51,10 +50,10 @@ test.describe("Dashboard tests", () => {
 
   test("Remove item from cart", async ({}) => {
     const cartID = 119;
-    const itemID = 9;
+    const itemID = 14;
     const response = await dashboard.deleteItemFromCart(cartID, itemID, bearerToken);
-    expect(response.status).toBe("Success");
-    const successMessages = response.message == "Product removed from cart." || response.message == "Product quantity decreased.";
+    expect(response.status).toBe(SUCCESS["API_SUCCESS"]);
+    const successMessages = response.message == SUCCESS["API_PRODUCT_REMOVED_FROM_CART"] || response.message == SUCCESS["API_PRODUCT_QUANTITY_DECREASED"];
     expect(successMessages).toBe(true);
   });
 
