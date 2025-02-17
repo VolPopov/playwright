@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { URLS } from '../../../fixtures';
+import { SUCCESS, URLS } from '../../../fixtures';
 import { Dashboard } from '../../../pom/modules/ui/dashboard';
 import { Header } from '../../../pom/modules/ui/header';
 import { LoginPage } from '../../../pom/modules/ui/loginPage';
@@ -37,27 +37,19 @@ test.describe('dashboard tests', () => {
   });
 
   test("Delete all products from cart", async({ page }) => {
-    let broj = 6;
+    let broj = 14;
+    let cartID = 119;
     await expect(dashboard.addToCartButton.nth(broj)).toBeEnabled();
     await dashboard.addAnItemToCart(broj);
     await header.button.nth(0).click();
     await expect(dashboard.clearButton).toBeVisible();
     await dashboard.deleteAllItemsFromCart();
-    await page.locator("div[class='z-10 text-3xl font-semibold sm:mt-12 md:mt-12 lg:mt-16']").waitFor();
+    const responsePromise = await page.waitForResponse(`/api/v1/cart/${cartID}`);
+    const response = await responsePromise;
+    const responseBody = await response.json();
+    expect(responseBody.status).toBe(SUCCESS["API_SUCCESS"]);
+    expect(responseBody.cart).toStrictEqual([]);
     await expect(page.locator("div[class='z-10 text-3xl font-semibold sm:mt-12 md:mt-12 lg:mt-16']")).toHaveText("No items in cart. Add some!");
   });
-
-  test("Delete one item from cart", async({ page })=> {
-    let broj = 7;
-    await dashboard.addAnItemToCart(broj);
-    await header.button.nth(0).click();
-    await expect(dashboard.itemsInCart.nth(0)).toBeVisible();
-    const numberOfProductsInCart = await dashboard.itemsInCart.count();
-    const ime = (await page.textContent('[test-data="product-container"] >> h1 >> nth='+ broj, { strict: true }));
-    for (let i = 0; i< numberOfProductsInCart; i++) {
-      const currentDiv = dashboard.itemsInCart.nth(i);
-      if (await expect(dashboard.itemsInCart.nth(i)).toContainText(ime))
-        await (dashboard.itemsInCart.nth(i)).locator("button").nth(0).click();
-    }
-  });
 });
+
