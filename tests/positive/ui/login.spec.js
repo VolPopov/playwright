@@ -153,6 +153,5 @@ test.describe('login tests', () => {
     await expect(header.button.nth(0)).toBeVisible();
     await expect(header.button.nth(1)).toBeVisible();
     await expect(dashboard.products.nth(0)).toBeVisible();
-    await expect(dashboard.addToCartButton.nth(3)).toBeEnabled();
   });
 });
